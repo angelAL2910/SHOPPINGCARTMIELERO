@@ -1,0 +1,11 @@
+Microsoft Visual Studio Solution File, Format Version 1.00
+Project("{73393D18-DAC4-11D1-88FC-0000F8064EBB}") = "MieleroSetup", "MieleroSetup.wip", "{DD62BA77-FE6A-4DD6-8CBC-1E156B1A532D}"
+EndProject
+Global
+	GlobalSection(LocalDeployment) = postSolution
+		StartupProject = {00000000-0000-0000-0000-000000000000}
+	EndGlobalSection
+	GlobalSection(BuildOrder) = postSolution
+		0 = {DD62BA77-FE6A-4DD6-8CBC-1E156B1A532D}
+	EndGlobalSection
+EndGlobal

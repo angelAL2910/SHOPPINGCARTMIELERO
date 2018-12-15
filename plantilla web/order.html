@@ -1,0 +1,355 @@
+<html> 
+   <head>
+   <title> <!--TITULO DE LA TIENDA--> </title>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+   <!--SCRIPTS DE CABECERA-->
+   <script language="JavaScript">
+   <!--
+   var pedido="";
+   var partes;
+   var partes2;
+   var totalpedido=0;
+   function SetCookie(clave,valor) {
+
+    var cadenacookie="";
+    var clavetempo="" + clave;
+    var valortempo=""+valor;
+    var fecha=new Date();
+    if (arguments.length<2) {
+
+      return;
+
+    }
+
+    cadenacookie=escape(clavetempo) + "=" + escape(valortempo);
+    if (arguments.length>=3 && parseInt(arguments[2])==arguments[2] && parseInt(arguments[2])>=1) {
+
+
+      fecha.setTime(fecha.getTime()+(1000*60*60*24*parseInt(arguments[2])));
+      cadenacookie=cadenacookie+";expires=" + fecha.toGMTString(); 
+   
+    
+
+    }
+
+
+    if (arguments.length>=4 && arguments[3]!="") {
+
+      cadenacookie=cadenacookie+";domain=" + arguments[3]; 
+
+
+    }  
+
+    if (arguments.length>=5 && arguments[4]!="") {
+
+      cadenacookie=cadenacookie+";path=" + arguments[3]; 
+
+
+    }  
+    if (arguments.length>=6 && arguments[5]==true) {
+    
+      cadenacookie=cadenacookie+";secure=true"; 
+
+
+
+    }  
+ 
+    document.cookie=cadenacookie;
+
+    return;
+
+  }
+
+  function GetCookie(clave) {
+   
+    var cadenacookies;
+    var posicion;
+    var posicion2;
+
+    if (arguments.length<1) {
+
+      return "";
+
+    }
+
+
+    cadenacookies=document.cookie;
+
+    posicion=cadenacookies.indexOf(clave + "=");
+    if (posicion==-1) {
+
+      return "";
+
+    } 
+    else {
+
+      posicion=posicion + (clave + "=").length;
+
+    }
+    posicion2=cadenacookies.indexOf(";",posicion);   
+    if (posicion2==-1) {
+
+      cadenacookies=cadenacookies.substring(posicion);
+
+    }
+    else {
+   
+      cadenacookies=cadenacookies.substring(posicion,posicion2);
+   
+    }
+    return unescape(cadenacookies);
+  }
+
+  function DeleteCookie(clave) {
+  
+    var fecha=new Date();
+
+    if (arguments.length<1) {
+
+      return; 
+
+    }
+
+
+    fecha.setTime(fecha.getTime()-1);
+    document.cookie=clave + "=NULL;expires=" + fecha.toGMTString();
+
+    return;
+
+  }
+  function trim(cadena) {
+  var cadenatempo=""+cadena;
+  var punto=-1;
+  if (arguments.length<1 || cadena=="" || cadena==null) {
+
+    return "";
+
+  }
+  for (var i=0;i<cadenatempo.length;i++) {
+
+
+    if (cadenatempo.charAt(i)!=" " && cadenatempo.charAt(i)!="\r" && cadenatempo.charAt(i)!="\n" && cadenatempo.charAt(i)!="\0") {
+
+      punto=i
+      break;
+
+    }
+
+
+  }
+  if (punto==-1) {
+    return "";
+  } 
+  cadenatempo=cadenatempo.substring(punto);;
+  for (var i=cadenatempo.length-1;i>=0;i--) {
+
+
+    if (cadenatempo.charAt(i)!=" " && cadenatempo.charAt(i)!="\r" && cadenatempo.charAt(i)!="\n" && cadenatempo.charAt(i)!="\0") {
+      cadenatempo=cadenatempo.substring(0,i+1);
+      break;
+
+    }
+
+
+  }
+
+
+  return cadenatempo;
+
+}
+
+
+function validarcorreoe(direccion) {
+  var arpartes;
+  var arpartes2;
+
+  if (direccion==null || direccion=="") {
+    return false;
+  }
+
+  arpartes=direccion.split("@");
+  if (arpartes.length!=2) {
+    return false;
+  }
+
+  arpartes2=arpartes[0].split(".");
+  for (var i=0;i<arpartes2.length;i++) {
+    if (arpartes2[i]=="") {
+      return false;
+    }  
+  }
+
+  arpartes2=arpartes[1].split(".");
+  for (var i=0;i<arpartes2.length;i++) {
+    if (arpartes2[i]=="") {
+      return false;
+    }  
+  }
+ 
+  if (arpartes2[arpartes2.length-1].length<2) {
+    return false;
+  }
+  for (var i=0;i<direccion.length;i++) {
+    if (direccion.charAt(i)==" " || direccion.charAt(i)=="\t") {
+      return false; 
+    }    
+  } 
+  return true;
+}
+
+
+function esuntelefonovalido(telefono) {
+ 
+  var numerotelefono="" + telefono
+  var retval=true;
+
+  
+  if (numerotelefono.length<9) {
+    return false;
+  }
+
+  for (var i=0;i<numerotelefono.length;i++) {
+    if (numerotelefono.charAt(i)<"0" || numerotelefono.charAt(i)>"9") {
+      retval=false;
+      break;
+    }
+  }
+  return retval;
+}
+
+function validatedatas(formulario) {
+
+  if (trim(formulario.nombre.value)=="") {
+    alert("You have to introduce your name");
+    return false
+  }
+  else if (trim(formulario.apellidos.value)=="") {
+    alert("You have to introduce your last name");
+    return false
+  }
+
+  else if (trim(formulario.direccion.value)=="") {
+    alert("You have to introduce your postal address");
+    return false
+  }
+  else if (trim(formulario.ciudad.value)=="") {
+    alert("You have to introduce the name of your city");
+    return false
+  }
+  else if (trim(formulario.pais.value)=="") {
+    alert("You have to introduce the name of your country");
+    return false
+  }
+  else if (esuntelefonovalido(formulario.telefono.value)==false) {
+    alert("You have to introduce your telephone number");
+    return false;
+  }
+  else if (validarcorreoe(formulario.correoe.value)==false) {
+    alert("You have to introduce your E-Mail address");
+    return false;
+  }
+  else {
+   return true;
+  }
+}
+//-->
+</script>
+
+   <script language="JavaScript">
+   <!--
+     
+     if (GetCookie("pedido")=="") {
+       location.href="catalog.html";       
+     }
+     pedido="Order:\n";
+     
+     partes=GetCookie("pedido").split("?");
+     for (var i=0;i<partes.length;i++) {
+       partes2=partes[i].split("|")
+       if (partes2.length!=4) {
+         location.href="catalog.html"; 
+       }
+       else if (trim(partes2[0])=="") {
+         location.href="catalog.html"; 
+       }
+       else if (isNaN(partes2[1])==true || parseInt(partes2[1])<1 || parseInt(partes2[1])>99) {
+         location.href="catalog.html"; 
+       }
+       else if (isNaN(partes2[2])==true || parseInt(partes2[2])<1) {
+         location.href="catalog.html"; 
+       }
+       else if (isNaN(partes2[3])==true || parseInt(partes2[3])<1) {
+         location.href="catalog.html"; 
+       }
+
+       pedido=pedido + partes2[0] + "\t" + partes2[1] + " units\t price per unit: " + partes2[2]  +"  " + currency_name + "\t Total:" + partes2[3] + " "  + currency_name + "\n";
+       totalpedido=totalpedido+parseInt(partes2[3]);
+     }
+     pedido=pedido + "\nTotal Order: " + totalpedido + " " + currency_name;
+
+   //-->
+   </script>
+   </head> 
+   <body link="#0000ff" vlink="#0000ff" alink="#0000ff"> 
+	<font color="#aa0000">The Shopping Cart &raquo;</font><font color="#ff0000"> <!--TITULO DE LA TIENDA--></font>
+        <!--CABECERA FORMULARIO ENVIO-->
+        <table border=0>
+        <tr>
+        <td align="right">Name:</td>
+        <td><input name="nombre" type="text" size="25" maxlength="35" value=""></td>
+        </tr>
+        <tr>
+        <td align="right">Last Name:</td>
+        <td><input name="apellidos" type="text" size="25" maxlength="55" value=""></td>
+        </tr>
+        <tr>
+        <td align="right">Address:</td>
+        <td><input name="direccion" type="text" size="25" maxlength="35" value=""></td>
+        </tr>
+        <tr>
+        <td align="right">City:</td>
+        <td><input name="ciudad" type="text" size="25" maxlength="35" value=""></td>
+        </tr>
+        <tr>
+        <td align="right">State:</td>
+        <td><input name="estado" type="text" size="25" maxlength="35" value=""></td>
+        </tr>
+        <tr>
+        <td align="right">Country:</td>
+        <td><input name="pais" type="text" size="25" maxlength="35" value=""></td>
+        </tr>
+        <tr>
+        <td align="right">Zip:</td>
+        <td><input name="cp" type="text" size="25" maxlength="35" value=""></td>
+        </tr>
+        <tr>
+        <td align="right">Telephone Number:</td>
+        <td><input name="telefono" type="text" size="25" maxlength="35" value=""></td>
+        </tr>
+        <tr>
+        <td align="right">E-mail Address:</td>
+        <td><input name="correoe" type="text" size="25" maxlength="35" value=""></td>
+        </tr>
+        <tr>
+        <td>
+        <script language="JavaScript">
+        <!--
+          document.write("<input name=\"pedido\" type=\"hidden\" value=\""+pedido+"\">")
+        //-->
+        </script>
+        
+        <input type="submit" value="Submit Order"></td>
+        <td><input type="Reset" value="Reset Order"></td>
+        </tr>
+
+        </table>
+        </form>
+<!-----------------// DO NOT REMOVE POWERED BY LINK... pretty please? ----------------->
+   <div align="center"><font size=2>
+   Powered by <a href="http://www.aqonlinenetworks.com" target=_blank>AQ Online Networks</a> and <a href="http://www.wapcoders.com" target=_blank>Wap Coders</a></font>
+
+   </body>
+</html>
+
+
+

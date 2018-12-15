@@ -1,0 +1,18 @@
+Version 0.54
+-fix some important bugs
+-fix some minors bugs
+Version 0.53
+-Allow to make web and wap shops at the same time.
+-Optmitation of the source code of the configuration manager.
+-Add the documentation in format "javadoc" of the class of configuration manager, avalible 
+in documentacion/docs.zip
+-The package of this aplication is avalible in format msi for windows and zip for any os.  
+Version 0.52
+-fix some important bugs
+-fix some minors bugs
+Version 0.51 
+- Added a field to put a subject to the mail when this way is chosen to send the information of the order.
+- Added the button "Brownser" in the "End" tab to choose the directory where the page will be saved by a box selection.
+- The source code of the configuration manager is now included in the program of installation, since before, it has to be downloaded in a .zip file. Now this one is in a .zip file called SRC.zip in the directoy where the program is installed.  
+Version 0.50 
+- the initial version of the program.

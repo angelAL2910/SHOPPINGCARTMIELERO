@@ -1,0 +1,233 @@
+extern function incpro(numeroproducto,precioproducto) {
+
+
+  var precioarticulo=0;
+  var numerodeunidades=0;
+
+  numerodeunidades=WMLBrowser.getVar("item" +numeroproducto);
+  if (numerodeunidades<99) {
+    numerodeunidades++;
+    precioarticulo=numerodeunidades*precioproducto;
+    WMLBrowser.setVar("item" +numeroproducto,numerodeunidades);
+    WMLBrowser.setVar("precio" +numeroproducto,precioarticulo);
+    calculartotal();
+    WMLBrowser.refresh();
+  }
+
+}
+
+
+function calculartotal() {
+
+  var numeroproductos=<!--NUMERO DE PRODUCTOS-->
+  var total=0;
+  for (var i=1;i<=numeroproductos;i++) {
+  
+    
+    total= total + (1*WMLBrowser.getVar("precio"+i));
+
+ }
+  WMLBrowser.setVar("preciototal",total);
+
+}
+extern function decpro(numeroproducto,precioproducto) {
+
+
+  var precioarticulo=0;
+  var numerodeunidades=0;
+
+  numerodeunidades=WMLBrowser.getVar("item" +numeroproducto);
+  if (numerodeunidades>0) {
+    numerodeunidades--;
+    precioarticulo=numerodeunidades*precioproducto;
+    WMLBrowser.setVar("item" +numeroproducto,numerodeunidades);
+    WMLBrowser.setVar("precio" +numeroproducto,precioarticulo);
+    calculartotal();
+    WMLBrowser.refresh();
+  }
+
+}
+extern function storeorder() {
+  
+  var numeroproductos=<!--NUMERO DE PRODUCTOS-->
+  var total=0;
+  var pedido="";
+  total= WMLBrowser.getVar("preciototal");
+  if (total<=0) {
+    Dialogs.alert("Please, add some products to cart"); 
+    return;
+  }
+
+  for (var i=1;i<=numeroproductos;i++) {
+    if (WMLBrowser.getVar("item" +i)>=1) {
+      if (pedido!="") {
+         pedido=pedido +'|';
+       }
+       pedido=pedido + i + "|" + WMLBrowser.getVar("item" +i) + "|" +WMLBrowser.getVar("precio" +i);
+    }
+  }
+  WMLBrowser.setVar("pedido",pedido);
+  WMLBrowser.go("order.wml");
+}      
+
+
+extern function comprobarvariables() {
+  var numeroproductos=<!--NUMERO DE PRODUCTOS-->
+  var pedido="";
+  var cuenta=0;
+  var elemento="";
+  var total=0;
+  pedido=WMLBrowser.getVar("pedido");
+  if (pedido=="") {
+    WMLBrowser.go("order.wml");
+    return;
+  }
+  cuenta=String.elements(pedido,"|");
+  if ((cuenta %3)!=0) {
+    WMLBrowser.go("order.wml");
+    return;
+  }
+  cuenta=0;
+  for (var i=0;i<cuenta;i++) {
+
+    cuenta++;
+    if (cuenta>3) {
+      cuenta=1;
+    }
+    elemento=String.elementAt(pedido,i,"|");
+    elemento=elemento-0;
+    if (cuenta==1 && typeof(elemento)!=0) {
+      WMLBrowser.go("order.wml");
+      return;
+    }
+    if (cuenta==1 && (elemento<1 || elemento>numeroproductos)) {
+      WMLBrowser.go("order.wml");
+      return;
+    }
+    else if (cuenta==2 && typeof(elemento)!=0) {
+      WMLBrowser.go("order.wml");
+      return;
+    }
+    else if (cuenta==2 && (elemento<0 || elemento>99)) {
+      WMLBrowser.go("order.wml");
+      return;
+    }
+    else if (cuenta==3 && typeof(elemento)!=0) {
+      WMLBrowser.go("order.wml");
+      return;
+    }
+    else if (cuenta==3 && elemento<0) {
+      WMLBrowser.go("order.wml");
+      return;
+    }
+  }
+  total=WMLBrowser.getVar("preciototal");
+  total=total-0;
+  if (typeof(total)!=0) {
+    WMLBrowser.go("order.wml");
+    return;
+  }
+  else if (total<0) {
+    WMLBrowser.go("order.wml");
+    return;
+  }
+}
+
+extern function validarformulario() {
+
+  if (String.trim(WMLBrowser.getVar("nombre"))=="") {
+    Dialogs.alert("You have to introduce your name");
+    return;
+  }
+  else if (String.trim(WMLBrowser.getVar("apellidos"))=="") {
+    Dialogs.alert("You have to introduce your last name");
+    return;
+  }
+  else if (String.trim(WMLBrowser.getVar("direccion"))=="") {
+    Dialogs.alert("You have to introduce your postal address");
+    return;
+  }
+  else if (String.trim(WMLBrowser.getVar("ciudad"))=="") {
+    Dialogs.alert("You have to introduce the name of your city");
+    return;
+  }
+
+  else if (String.trim(WMLBrowser.getVar("pais"))=="") {
+    Dialogs.alert("You have to introduce the name of your country");
+    return;
+  }
+  else if (telefonovalido(WMLBrowser.getVar("telefono"))==false) {
+    Dialogs.alert("You have to introduce your telephone number");
+    return;
+  }
+  else if (correoevalido(WMLBrowser.getVar("correoe"))==false) {
+    Dialogs.alert("You have to introduce your e-Mail address");
+    return;
+  }
+
+  WMLBrowser.go("#enviopedido");
+}
+
+function telefonovalido(numerodetelefono) {
+  var retval=true;
+  var i=0;
+  if (typeof(numerodetelefono)!=2) {
+    return false;
+  }
+  if (String.length(numerodetelefono)<9) {
+    return false;
+  }
+  for (i=0;i<String.length(numerodetelefono);i++) {
+    if (String.charAt(numerodetelefono,i)<"0" || String.charAt(numerodetelefono,i)>"9") {
+      
+      retval=false;
+      break;
+    
+    }
+  }
+  return retval;
+}
+
+function correoevalido(correoelectronico) {
+  var retval=true;
+  var tempo="";
+  var i=0;
+  if (typeof(correoelectronico)!=2) {
+    return false;
+  }
+
+  if (String.elements(correoelectronico,"@")!=2) {
+
+    return false;
+  
+  }
+  if (String.trim(String.elementAt(correoelectronico,0,"@"))=="") {
+    return false;
+  }
+  tempo=String.elementAt(correoelectronico,1,"@");
+  if (String.elements(tempo,".")<2) {
+    return false;
+  }
+
+  for (i=0;i<String.elements(tempo,".");i++) {
+    if (String.trim(String.elementAt(tempo,i,"."))=="") {
+      return false;
+      break;      
+    }
+  }
+  tempo= String.elementAt(tempo,(String.elements(tempo,".")-1),".");
+ 
+  if (String.length(tempo)<2 || String.length(tempo)>4) {
+    return false;
+  }
+
+  for (i=0;i<String.length(correoelectronico);i++) {
+    if (String.trim(String.charAt(correoelectronico,i))=="") {
+      return false;
+      break;      
+    }
+  }
+
+
+  return true;  
+}

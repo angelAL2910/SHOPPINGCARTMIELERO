@@ -1,0 +1,159 @@
+<html> 
+   <head>
+   <title><!--TITULO DE LA TIENDA--></title>
+   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251" />
+   <!--SCRIPTS DE CABECERA-->
+
+    <script language="JavaScript">
+  <!--
+
+  function SetCookie(clave,valor) {
+
+    var cadenacookie="";
+    var clavetempo="" + clave;
+    var valortempo=""+valor;
+    var fecha=new Date();
+  
+    if (arguments.length<2) {
+
+      return;
+
+    }
+
+    cadenacookie=escape(clavetempo) + "=" + escape(valortempo);
+    if (arguments.length>=3 && parseInt(arguments[2])==arguments[2] && parseInt(arguments[2])>=1) {
+
+
+      fecha.setTime(fecha.getTime()+(1000*60*60*24*parseInt(arguments[2])));
+      cadenacookie=cadenacookie+";expires=" + fecha.toGMTString(); 
+   
+    
+
+    }
+
+
+    if (arguments.length>=4 && arguments[3]!="") {
+
+      cadenacookie=cadenacookie+";domain=" + arguments[3]; 
+
+
+    }  
+
+    if (arguments.length>=5 && arguments[4]!="") {
+
+      cadenacookie=cadenacookie+";path=" + arguments[3]; 
+
+
+    }  
+    if (arguments.length>=6 && arguments[5]==true) {
+    
+      cadenacookie=cadenacookie+";secure=true"; 
+
+
+
+    }  
+ 
+    document.cookie=cadenacookie;
+
+    return;
+
+  }
+
+  function GetCookie(clave) {
+   
+    var cadenacookies;
+    var posicion;
+    var posicion2;
+
+    if (arguments.length<1) {
+
+      return "";
+
+    }
+
+
+    cadenacookies=document.cookie;
+
+    posicion=cadenacookies.indexOf(clave + "=");
+    if (posicion==-1) {
+
+      return "";
+
+    } 
+    else {
+
+      posicion=posicion + (clave + "=").length;
+
+    }
+    posicion2=cadenacookies.indexOf(";",posicion);   
+    if (posicion2==-1) {
+
+      cadenacookies=cadenacookies.substring(posicion);
+
+    }
+    else {
+   
+      cadenacookies=cadenacookies.substring(posicion,posicion2);
+   
+    }
+    return unescape(cadenacookies);
+  }
+
+  function DeleteCookie(clave) {
+  
+    var fecha=new Date();
+
+    if (arguments.length<1) {
+
+      return; 
+
+    }
+
+
+    fecha.setTime(fecha.getTime()-1);
+    document.cookie=clave + "=NULL;expires=" + fecha.toGMTString();
+
+    return;
+
+  }
+
+  function storeorder() {
+    var pedido=""
+    if (parseInt(form1.total_items.value)<=0) {
+      alert("Please, add some products to cart") 
+      return;     
+    }  
+    SetCookie("order","DATAGRAM");
+    if (GetCookie("order")!="DATAGRAM") {
+      alert("Please, active cookies for use this cart");
+      return;
+    }
+
+    for (var i=1;i<=items_number;i++) {
+      if (parseInt(eval("form1.item" + i + "_i.value"))>0) { 
+        if (pedido!="") {
+          pedido=pedido + "?";
+        } 
+        pedido=pedido + eval("item" + i + "_name") + "|" + form1.elements["item"+i+"_i"].value + "|" + eval("item" + i + "_price") + "|" + form1.elements["item"+i].value;
+      }
+    }
+    SetCookie("pedido",pedido);
+    location.href="order.html";
+  }
+//-->
+</script>
+
+</head> 
+   <body link="#0000ff" vlink="#0000ff" alink="#0000ff"> 
+	<font color="#aa0000">The Shopping Cart &raquo;</font><font color="#ff0000"> <!--TITULO DE LA TIENDA--></font>
+<!--FORMULARIO DE PRODUCTOS-->
+
+<!-----------------// DO NOT REMOVE POWERED BY LINK... pretty please? ----------------->
+   <div align="center"><font size=2>
+   Powered by <a href="http://www.aqonlinenetworks.com" target=_blank>AQ Online Networks</a> and <a href="http://www.wapcoders.com" target=_blank>Wap Coders</a></font>
+
+   </body>
+</html>
+
+
+

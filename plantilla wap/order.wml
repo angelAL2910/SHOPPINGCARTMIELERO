@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!DOCTYPE wml PUBLIC "-//WAPFORUM//DTD WML 1.1//EN" 
+     "http://www.wapforum.org/DTD/wml_1.1.xml"> 
+ 
+<wml>
+
+<card id="peticiondedatos" title="<!--TITULO DE LA TIENDA-->">
+<onevent type="ontimer">
+  <go href="MiscCatalog.wmls#comprobarvariables()" />
+   
+</onevent>
+<timer name="tiempo" value="10" />
+<p align="center">
+  Name:<br />
+ 
+  <input name="nombre" type="text" size="12" maxlength="35" value="" emptyok="false" /><br />
+  
+  Last Name:<br />
+  <input name="apellidos" type="text" size="12" maxlength="55" value="" emptyok="false" /><br />
+
+  Address:<br />
+  <input name="direccion" type="text" size="12" maxlength="35" value="" emptyok="false" /><br />
+
+  City:<br />
+  <input name="ciudad" type="text" size="12" maxlength="35" value="" emptyok="false" /><br />
+
+
+  State:<br />
+  <input name="estado" type="text" size="12" maxlength="35" value=""  /><br />
+
+
+  Country:<br />
+  <input name="pais" type="text" size="12" maxlength="35" value="" emptyok="false" /><br />
+
+  
+  Zip:<br />
+  <input name="cp" type="text" size="12" maxlength="35" value="" /><br />
+
+  Telephone:<br />
+  <input name="telefono" type="text" size="12" maxlength="35" value="" emptyok="false" format="*N" /><br />
+
+  E-Mail:<br />
+  <input name="correoe" type="text" size="12" maxlength="35" value="" emptyok="false" /><br />
+
+  <br />
+  <anchor>
+    Next
+    <go href="MiscCatalog.wmls#validarformulario()" />
+  </anchor>
+  <anchor>
+    Back
+    <prev />
+  </anchor>
+</p>
+
+
+  
+</card>
+<card id="enviopedido">
+<p>
+
+  Thanks for using our services, select Submit Order to send the order definitly, or 
+  select Back for change an option.
+
+</p>
+<p align="center">
+<br />
+<anchor>
+Submit Order
+<go href="<!--DIRECCION DEL SERVIDOR-->" method="post">
+<postfield name="nombre" value="$(nombre:n)" />
+<postfield name="apellidos" value="$(apellidos:n)" />
+<postfield name="direccion" value="$(direccion:n)" />
+<postfield name="ciudad" value="$(ciudad:n)" />
+<postfield name="estado" value="$(estado:n)" />
+<postfield name="pais" value="$(pais:n)" />
+<postfield name="cp" value="$(cp:n)" />
+<postfield name="telefono" value="$(telefono:n)" />
+<postfield name="correoe" value="$(correoe:n)" />
+<postfield name="pedido" value="$(pedido:n)" />
+</go>
+</anchor>
+  <anchor>
+    Back
+    <prev />
+  </anchor>
+</p>
+
+<p align="center"><br /><small>
+   Powered by <a href="http://www.aqonlinenetworks.com">AQ Online Networks</a> and <a href="http://www.wapcoders.com">Wap Coders</a></small>
+</p>
+</card>
+</wml>
