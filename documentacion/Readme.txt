@@ -1,5 +1,5 @@
 Read this file, it contains important information about this program. If you do not want read now this file is in the path 
-documentacion/Reame.txt or documentacion/Reame.rtf of directory where you install this aplication.
+documentacion/Readme.txt or documentacion/Readme.rtf of directory where you install this aplication.
 
 1-What is this program??.
 
